@@ -15,6 +15,7 @@
   <run_depend>racecar_safety_controller</run_depend>
   <run_depend>racecar_potential_field_controller</run_depend>
 
+  <!-- Edited - Shaun Bowman - add mowbot controller -->
   <run_depend>racecar_mowbot_v1_controller</run_depend>
 
   <export>
