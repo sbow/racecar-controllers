@@ -14,9 +14,16 @@ class MowbotControllerNode:
         # publisher for the safe Ackermann drive command
         self.cmd_pub = rospy.Publisher("ackermann_cmd", AckermannDriveStamped, queue_size=10)
 
+        # setup 40 hz timer
+        rospy.Timer( rospy.Duration( 1.0/1.0 ), self.timer_callback)
+
     def ackermann_cmd_input_callback(self, msg):
         # republish the input as output (not exactly "safe")
         self.cmd_pub.publish(msg)
+
+    def timer_callback(self):
+        # 40 hz publisher
+        rospy.loginfo("Mowbot online!")
 
 
 if __name__ == "__main__":
