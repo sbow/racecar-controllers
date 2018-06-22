@@ -6,7 +6,7 @@
   <arg name="config"     default="default" />
   <arg name="config_path" default="$(find racecar_mowbot_v1_controller)/config/$(arg config).yaml" />
 
-  <node pkg="racecar_mowbot_v1_controller" type="mowbot_v1_controller_node.py" name="mowbot_v1_controller">
+  <node pkg="racecar_mowbot_v1_controller" type="mowbot_v1_controller_node.py" name="mowbot_controller">
     <remap from="navigation" to="/vesc/high_level/ackermann_cmd_mux/input/nav_0" />
   </node>
 
