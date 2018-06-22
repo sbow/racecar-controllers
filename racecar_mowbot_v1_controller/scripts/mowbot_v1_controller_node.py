@@ -21,7 +21,7 @@ class MowbotControllerNode:
         # republish the input as output (not exactly "safe")
         self.cmd_pub.publish(msg)
 
-    def timer_callback(self):
+    def timer_callback(self, msg):
         # 40 hz publisher
         rospy.loginfo("Mowbot online!")
 
