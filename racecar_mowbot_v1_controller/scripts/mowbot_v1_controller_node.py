@@ -2,11 +2,15 @@
 #
 
 import rospy
+
 from ackermann_msgs.msg import AckermannDriveStamped
+from mowbot_general_control import mowbot_v1_main
 
 
 class MowbotControllerNode:
     mowbot_msg = AckermannDriveStamped()
+    mb_gnrl = mowbot_v1_main()
+
 
     def __init__(self):
         # subscribe to incomming Ackermann drive commands
@@ -38,9 +42,20 @@ class MowbotControllerNode:
     def vesc_timer_callback(self, msg):
         # 50 hz publisher
         # update VESC throttle / servo command
-        self.mowbot_commander_simple_demo()
+        # self.mowbot_commander_simple_demo()
+        self.get_mbgnr_cmd()
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
-        rospy.loginfo("Mowbot servo / motor command sent")
+        # rospy.loginfo("Mowbot servo / motor command sent")
+
+    def get_mbgnr_cmd(self):
+        MowbotControllerNode.mb_gnrl.get_command()
+        MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
+        MowbotControllerNode.mowbot_msg.header.frame_id = "mowbot_ackermann_cmd"
+        MowbotControllerNode.mowbot_msg.drive.steering_angle = MowbotControllerNode.mb_gnrl.cmd_steering_angle
+        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = MowbotControllerNode.mb_gnrl.cmd_steering_angle_velocity
+        MowbotControllerNode.mowbot_msg.drive.speed = MowbotControllerNode.mb_gnrl.cmd_speed
+        MowbotControllerNode.mowbot_msg.drive.acceleration = MowbotControllerNode.mb_gnrl.cmd_acceleration
+        MowbotControllerNode.mowbot_msg.drive.jerk = MowbotControllerNode.mb_gnrl.cmd_jerk
 
     def mowbot_commander_simple_demo(self):
         MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
@@ -48,7 +63,7 @@ class MowbotControllerNode:
         # steering angle - in radians - TODO: rationalize w max value
         MowbotControllerNode.mowbot_msg.drive.steering_angle = 0.2
         # steering angle velocity - in radians per second
-        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 0.5
+        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 0.25
         # speed - drive - m/s
         MowbotControllerNode.mowbot_msg.drive.speed = 0.25
         # acceleration - drive - m/s/s
