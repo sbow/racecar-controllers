@@ -24,7 +24,9 @@ class MowbotControllerNode:
 
         # setup RPLidar handler - mowbot_laser_handler RplidarLaserHandler obj
         # RplidarLaserHandler( RawScanTopic, ROI_Ang_min_rad, ROI_Ang_max_rad, TF_Publish_Frame, OutputScanTopic )
-        self.rplidar_obj = RplidarLaserHandler('scan', 90/360.0*2*3.14, 270/360.0*2*3.14, 'mowbot_laser_0', 'mowbot/scan')
+        self.rplidar_obj = RplidarLaserHandler('scan', -360/360.0*3.14,
+                                               360/360.0*3.14,
+                                               'laser', 'mowbot/scan')
 
         # setup 50 hz timer - Main VESC / Motor Servo Command Loop
         rospy.Timer(rospy.Duration(1.0 / 50.0), self.vesc_timer_callback)
