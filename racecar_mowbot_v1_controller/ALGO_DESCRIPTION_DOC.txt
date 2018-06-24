@@ -1,0 +1,37 @@
+Algo Description Document
+v 1
+
+racecar_mowbot_v1_controller:
+    - Purpose:  Autonomous controller for RacecarJ / MIT Racecar codebase (VESC / ROS / RPLIDAR / JETSON TX1)
+    - Design:   To be used as a node in ackermann VESC high level command mux
+    - Main:     mowbot_v1_controller_node.py <-- source code
+
+    - mowbot_v1_controller_node.py:
+
+        Major Class Methods(self):
+            __init__:
+                subscribe to ROS ackermann_cmd_input, setup callback for incomming commands (not sure why...)
+                setup timers / callbacks (ackermann_cmd_input_callback <-- servo / motor command loop)
+
+            vesc_timer_callback(self, msg):
+                call class method to update local copy of next VESC command (update_mb_vesc_cmd(), mowbot_msg)
+                publish next VESC command to ROS (mowbot_ackermann_cmd topic, mowbot_msg)
+
+            update_mb_vesc_cmd(self):
+                call update method of mowbot_general_control object
+                update local next VESC command (mowbot_msg, AckermannDriveStamped type)
+
+        Major Class Attributes:
+            mowbot_msg - local copy of next VESC command
+                - Type:     AckermannDriveStamped
+
+            mb_gnrl - mowbot_general_control object
+                - Purpose:  update / maintain next servo / motor command
+                            called periodically by main control loop "vesc_timer_callback"
+                - Usage:    mb_gnrl.get_command() <-- updates object data, AckermannDrive object data
+
+mowbot_general_control package:
+    - Purpose:  Sense / Percieve / Command, main controller object code
+    - Design:   No ROS code / hooks, for debugging can be instantiated / tested without ROS
+    - Main:     mowbot_v1_main.py <-- source code
+                get_command() <-- main method
