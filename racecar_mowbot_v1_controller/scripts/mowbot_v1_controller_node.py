@@ -23,7 +23,8 @@ class MowbotControllerNode:
         rospy.Timer(rospy.Duration(1.0 / 1.0), self.log_timer_callback)
 
         # read VESC parameters from config/default.yaml:
-        self.force_scale_x = rospy.get_param("force_scale_x")
+        # TODO: Doesnt work
+        # self.force_scale_x = rospy.get_param("force_scale_x")
 
     def ackermann_cmd_input_callback(self, msg):
         # republish the input as output (not exactly "safe")
