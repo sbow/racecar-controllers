@@ -16,8 +16,11 @@ class MowbotControllerNode:
         # publisher for the safe Ackermann drive command - Remapped in Launch to Vesc/Ackermann cmd multiplexr
         self.cmd_pub = rospy.Publisher("mowbot_ackermann_cmd", AckermannDriveStamped, queue_size=10)
 
-        # setup 40 hz timer
-        rospy.Timer(rospy.Duration(1.0 / 40.0), self.timer_callback)
+        # setup 50 hz timer - Main VESC / Motor Servo Command Loop
+        rospy.Timer(rospy.Duration(1.0 / 50.0), self.vesc_timer_callback)
+
+        # setup a display timer 1 hz
+        rospy.Timer(rospy.Duration(1.0 / 1.0), self.log_timer_callback)
 
         # read VESC parameters from config/default.yaml:
         self.force_scale_x = rospy.get_param("force_scale_x")
@@ -26,21 +29,25 @@ class MowbotControllerNode:
         # republish the input as output (not exactly "safe")
         self.cmd_pub.publish(msg)
 
-    def timer_callback(self, msg):
-        # 40 hz publisher
-        rospy.loginfo("Mowbot online!")
+    def log_timer_callback(self, msg):
+        # 1 hz publisher
+        # for messaging
+        rospy.loginfo("stayin alive")
+
+    def vesc_timer_callback(self, msg):
+        # 50 hz publisher
         # update VESC throttle / servo command
-        self.mowbot_commander(self)
+        self.mowbot_commander_simple_demo(self)
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         rospy.loginfo("Mowbot servo / motor command sent")
 
-    def mowbot_commander(self):
+    def mowbot_commander_simple_demo(self):
         MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
         MowbotControllerNode.mowbot_msg.header.frame_id = "mowbot_ackermann_cmd"
         # steering angle - in radians - TODO: rationalize w max value
         MowbotControllerNode.mowbot_msg.drive.steering_angle = 0.2
         # steering angle velocity - in radians per second
-        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 1
+        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 0.5
         # speed - drive - m/s
         MowbotControllerNode.mowbot_msg.drive.speed = 0.25
         # acceleration - drive - m/s/s
