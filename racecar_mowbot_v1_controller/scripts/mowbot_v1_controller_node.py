@@ -4,12 +4,12 @@
 import rospy
 
 from ackermann_msgs.msg import AckermannDriveStamped
-from mowbot_general_control import mowbot_v1_main
+from mowbot_general_control.mowbot_v1_main import MowbotV1Main
 
 
 class MowbotControllerNode:
     mowbot_msg = AckermannDriveStamped()
-    mb_gnrl = mowbot_v1_main()
+    mb_gnrl = MowbotV1Main()
 
 
     def __init__(self):
