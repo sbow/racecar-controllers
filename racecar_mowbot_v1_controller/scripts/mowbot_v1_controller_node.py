@@ -5,11 +5,13 @@ import rospy
 
 from ackermann_msgs.msg import AckermannDriveStamped
 from mowbot_general_control.mowbot_v1_main import MowbotV1Main
+from mowbot_laser_handler.mowbot_laser_handler import RplidarLaserHandler
 
 
 class MowbotControllerNode:
     mowbot_msg = AckermannDriveStamped()
     mb_gnrl = MowbotV1Main()
+    rplidar_obj = []
 
 
     def __init__(self):
@@ -19,6 +21,10 @@ class MowbotControllerNode:
 
         # publisher for the safe Ackermann drive command - Remapped in Launch to Vesc/Ackermann cmd multiplexr
         self.cmd_pub = rospy.Publisher("mowbot_ackermann_cmd", AckermannDriveStamped, queue_size=10)
+
+        # setup RPLidar handler - mowbot_laser_handler RplidarLaserHandler obj
+        # RplidarLaserHandler( RawScanTopic, ROI_Ang_min_rad, ROI_Ang_max_rad, TF_Publish_Frame, OutputScanTopic )
+        self.rplidar_obj = RplidarLaserHandler('scan', 90/360.0*2*3.14, 270/360.0*2*3.14, 'mowbot_laser_0', 'mowbot/scan')
 
         # setup 50 hz timer - Main VESC / Motor Servo Command Loop
         rospy.Timer(rospy.Duration(1.0 / 50.0), self.vesc_timer_callback)

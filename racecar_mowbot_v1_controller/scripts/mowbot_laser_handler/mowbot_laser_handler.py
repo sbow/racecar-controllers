@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-# LaserHandler.py
+# mowbot_laser_handler.py
 # Author: Shaun Bowman
-# Feb 11 2018
+# June 24 2018
 # Signal conditioning for ROS sensor_msgs/LaserScan
 #   Features:
 #       ROI - provides measurements in angle range of interest
@@ -15,7 +15,7 @@ import rospy
 from sensor_msgs.msg import LaserScan
 
 
-class LaserHandler:
+class RplidarLaserHandler:
     def __init__(self, raw_laser_topic='robot0/laser_0',\
                  angle_min=-2*3.14*1/4,\
                  angle_max=2*3.14*1/4, tf_frame_id='robot0_laser_0',
