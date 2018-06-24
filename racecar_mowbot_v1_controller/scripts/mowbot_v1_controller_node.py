@@ -38,7 +38,7 @@ class MowbotControllerNode:
     def vesc_timer_callback(self, msg):
         # 50 hz publisher
         # update VESC throttle / servo command
-        self.mowbot_commander_simple_demo(self)
+        self.mowbot_commander_simple_demo()
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         rospy.loginfo("Mowbot servo / motor command sent")
 
