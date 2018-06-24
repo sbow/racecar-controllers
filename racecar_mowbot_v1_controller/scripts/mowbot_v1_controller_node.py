@@ -20,7 +20,8 @@ class MowbotControllerNode:
         rospy.Timer(rospy.Duration(1.0 / 1.0), self.timer_callback)
 
         # read VESC parameters from config/default.yaml:
-        self.force_scale_x = rospy.get_param("force_scale_x")
+        # TODO: Bellow doesn't work - rospy.get_param
+        # self.force_scale_x = rospy.get_param("force_scale_x")
 
     def ackermann_cmd_input_callback(self, msg):
         # republish the input as output (not exactly "safe")
@@ -30,7 +31,7 @@ class MowbotControllerNode:
         # 40 hz publisher
         rospy.loginfo("Mowbot online!")
         # update VESC throttle / servo command
-        self.mowbot_commander(self)
+        self.mowbot_commander()
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         rospy.loginfo("Mowbot servo / motor command sent")
 
@@ -38,15 +39,15 @@ class MowbotControllerNode:
         MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
         MowbotControllerNode.mowbot_msg.header.frame_id = "mowbot_ackermann_cmd"
         # steering angle - in radians - TODO: rationalize w max value
-        MowbotControllerNode.mowbot_msg.steering_angle = 0.2
+        MowbotControllerNode.mowbot_msg.drive.steering_angle = 0.2
         # steering angle velocity - in radians per second
-        MowbotControllerNode.mowbot_msg.steering_angle_velocity = 1
+        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 1
         # speed - drive - m/s
-        MowbotControllerNode.mowbot_msg.speed = 0.25
+        MowbotControllerNode.mowbot_msg.drive.speed = 0.25
         # acceleration - drive - m/s/s
-        MowbotControllerNode.mowbot_msg.acceleration = 0.50
+        MowbotControllerNode.mowbot_msg.drive.acceleration = 0.50
         # jerk - drive - m/s/s/s
-        MowbotControllerNode.mowbot_msg.jerk = 2.00
+        MowbotControllerNode.mowbot_msg.drive.jerk = 2.00
 
 
 if __name__ == "__main__":
