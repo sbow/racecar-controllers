@@ -20,8 +20,7 @@ class MowbotControllerNode:
         rospy.Timer(rospy.Duration(1.0 / 1.0), self.timer_callback)
 
         # read VESC parameters from config/default.yaml:
-        # TODO: Bellow doesn't work - rospy.get_param
-        # self.force_scale_x = rospy.get_param("force_scale_x")
+        self.force_scale_x = rospy.get_param("force_scale_x")
 
     def ackermann_cmd_input_callback(self, msg):
         # republish the input as output (not exactly "safe")
@@ -31,7 +30,7 @@ class MowbotControllerNode:
         # 40 hz publisher
         rospy.loginfo("Mowbot online!")
         # update VESC throttle / servo command
-        self.mowbot_commander()
+        self.mowbot_commander(self)
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         rospy.loginfo("Mowbot servo / motor command sent")
 
