@@ -30,6 +30,7 @@ class MowbotV1Main:
         self.plan_step()
         self.lat_command()
         self.long_command()
+        self.rationalize_command()
 
     def read_world(self):
         # sense - should be ROS agnostic
@@ -58,5 +59,9 @@ class MowbotV1Main:
         MowbotV1Main.cmd_acceleration = 0.50
         MowbotV1Main.cmd_jerk = 2.00
 
+    def rationalize_command(self):
+        # check for max / min bounds of command
+        # check for max step size of command
+        # lat and long
 
 # subscribe to incomming Ackermann drive commands
