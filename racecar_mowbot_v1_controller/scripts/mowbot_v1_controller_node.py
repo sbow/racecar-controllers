@@ -17,7 +17,7 @@ class MowbotControllerNode:
         self.cmd_pub = rospy.Publisher("mowbot_ackermann_cmd", AckermannDriveStamped, queue_size=10)
 
         # setup 40 hz timer
-        rospy.Timer(rospy.Duration(1.0 / 1.0), self.timer_callback)
+        rospy.Timer(rospy.Duration(1.0 / 40.0), self.timer_callback)
 
         # read VESC parameters from config/default.yaml:
         # TODO: Bellow doesn't work - rospy.get_param
