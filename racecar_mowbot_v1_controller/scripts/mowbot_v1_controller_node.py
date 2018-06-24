@@ -43,11 +43,11 @@ class MowbotControllerNode:
         # 50 hz publisher
         # update VESC throttle / servo command
         # self.mowbot_commander_simple_demo()
-        self.get_mbgnr_cmd()
+        self.update_mb_vesc_cmd()
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         # rospy.loginfo("Mowbot servo / motor command sent")
 
-    def get_mbgnr_cmd(self):
+    def update_mb_vesc_cmd(self):
         MowbotControllerNode.mb_gnrl.get_command()
         MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
         MowbotControllerNode.mowbot_msg.header.frame_id = "mowbot_ackermann_cmd"
