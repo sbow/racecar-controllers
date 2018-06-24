@@ -38,15 +38,15 @@ class MowbotControllerNode:
         MowbotControllerNode.mowbot_msg.header.stamp = rospy.Time.now()
         MowbotControllerNode.mowbot_msg.header.frame_id = "mowbot_ackermann_cmd"
         # steering angle - in radians - TODO: rationalize w max value
-        MowbotControllerNode.mowbot_msg.steering_angle = 0.2
+        MowbotControllerNode.mowbot_msg.drive.steering_angle = 0.2
         # steering angle velocity - in radians per second
-        MowbotControllerNode.mowbot_msg.steering_angle_velocity = 1
+        MowbotControllerNode.mowbot_msg.drive.steering_angle_velocity = 1
         # speed - drive - m/s
-        MowbotControllerNode.mowbot_msg.speed = 0.25
+        MowbotControllerNode.mowbot_msg.drive.speed = 0.25
         # acceleration - drive - m/s/s
-        MowbotControllerNode.mowbot_msg.acceleration = 0.50
+        MowbotControllerNode.mowbot_msg.drive.acceleration = 0.50
         # jerk - drive - m/s/s/s
-        MowbotControllerNode.mowbot_msg.jerk = 2.00
+        MowbotControllerNode.mowbot_msg.drive.jerk = 2.00
 
 
 if __name__ == "__main__":
