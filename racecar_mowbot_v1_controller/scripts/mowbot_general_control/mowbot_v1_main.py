@@ -22,6 +22,7 @@ class MowbotV1Main:
     def __init__(self):
         # setup variables
         # create child classes
+        pass
 
     def get_command(self):
         # main "loop"
@@ -31,15 +32,19 @@ class MowbotV1Main:
         self.lat_command()
         self.long_command()
         self.rationalize_command()
+        pass
 
     def read_world(self):
         # sense - should be ROS agnostic
+        pass
 
     def plan_path(self):
         # plan path - ros agnostic
+        pass
 
     def plan_step(self):
         # determine next step on path
+        pass
 
     def lat_command(self):
         # determine next lateral (steering) command
@@ -48,6 +53,7 @@ class MowbotV1Main:
 
         MowbotV1Main.cmd_steering_angle = 0.2
         MowbotV1Main.cmd_steering_angle_velocity = 0.25
+        pass
 
     def long_command(self):
         # determine next longnituinal (throttle) command
@@ -58,10 +64,11 @@ class MowbotV1Main:
         MowbotV1Main.cmd_speed = 0.25
         MowbotV1Main.cmd_acceleration = 0.50
         MowbotV1Main.cmd_jerk = 2.00
+        pass
 
     def rationalize_command(self):
         # check for max / min bounds of command
         # check for max step size of command
         # lat and long
+        pass
 
-# subscribe to incomming Ackermann drive commands
