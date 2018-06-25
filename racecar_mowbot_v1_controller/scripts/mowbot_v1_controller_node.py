@@ -65,7 +65,7 @@ class MowbotControllerNode:
         # hector_slam /slam_out_pose callback - averages 13.5 Hz
         # TODO: Fill out pose callback, populate self.pose_obj
         self.pose_obj = msg
-        # MowbotControllerNode.mb_gnrl.pose_slam(self.pose_obj)
+        MowbotControllerNode.mb_gnrl.update_pose(self.pose_obj)
 
     def update_mb_vesc_cmd(self):
         MowbotControllerNode.mb_gnrl.get_command()
