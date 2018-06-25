@@ -18,6 +18,8 @@ class MowbotV1Main:
     cmd_acceleration = 0.0
     cmd_jerk = 0.0
 
+    pose_slam = []
+
 
     def __init__(self):
         # setup variables
@@ -71,4 +73,33 @@ class MowbotV1Main:
         # check for max step size of command
         # lat and long
         pass
+
+    def get_pose(self):
+        return self.pose_slam
+        pass
+
+    def update_pose(self, pose):
+        # Update pose
+        # generic format is slam_out_pose
+        # Example Output:
+        #
+        # header:
+        # seq: 2088
+        # stamp:
+        # secs: 1529885767
+        # nsecs: 919487405
+        # frame_id: map
+        # pose:
+        # position:
+        # x: 0.0012092590332
+        # y: -0.00422286987305
+        # z: 0.0
+        # orientation:
+        # x: 0.0
+        # y: 0.0
+        # z: 0.00163327538902
+        # w: 0.999998666205
+        self.pose_slam = pose
+        pass
+
 

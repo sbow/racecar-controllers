@@ -12,6 +12,7 @@ class MowbotControllerNode:
     mowbot_msg = AckermannDriveStamped()
     mb_gnrl = MowbotV1Main()
     rplidar_obj = []
+    pose_obj = []
 
 
     def __init__(self):
@@ -31,8 +32,11 @@ class MowbotControllerNode:
         # setup 50 hz timer - Main VESC / Motor Servo Command Loop
         rospy.Timer(rospy.Duration(1.0 / 50.0), self.vesc_timer_callback)
 
-        # setup a display timer 1 hz
-        rospy.Timer(rospy.Duration(1.0 / 1.0), self.log_timer_callback)
+        # setup a display timer 0.25 hz
+        rospy.Timer(rospy.Duration(1.0 / 0.25), self.log_timer_callback)
+
+        # setup pose callback - Pose update from hector_slam - rostopic hz /slam_out_pose ~ 13.5 hz Jetson TX1
+        rospy.Subscriber("slam_out_pose", PoseStamped, self.hector_pose_callback)
 
         # read VESC parameters from config/default.yaml:
         # TODO: Doesnt work
@@ -46,6 +50,7 @@ class MowbotControllerNode:
         # 1 hz publisher
         # for messaging
         rospy.loginfo("stayin alive")
+        rospy.loginfo(self.pose_obj)
 
     def vesc_timer_callback(self, msg):
         # 50 hz publisher
@@ -54,6 +59,12 @@ class MowbotControllerNode:
         self.update_mb_vesc_cmd()
         self.cmd_pub.publish(MowbotControllerNode.mowbot_msg)
         # rospy.loginfo("Mowbot servo / motor command sent")
+
+    def hector_pose_callback(self, msg):
+        # hector_slam /slam_out_pose callback - averages 13.5 Hz
+        # TODO: Fill out pose callback, populate self.pose_obj
+        self.pose_obj = msg
+        MowbotControllerNode.mb_gnrl.pose_slam(self.pose_obj)
 
     def update_mb_vesc_cmd(self):
         MowbotControllerNode.mb_gnrl.get_command()
