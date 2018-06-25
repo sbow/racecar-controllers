@@ -6,6 +6,7 @@ import rospy
 from ackermann_msgs.msg import AckermannDriveStamped
 from mowbot_general_control.mowbot_v1_main import MowbotV1Main
 from mowbot_laser_handler.mowbot_laser_handler import RplidarLaserHandler
+from geometry_msgs.msg import PoseStamped
 
 
 class MowbotControllerNode:
