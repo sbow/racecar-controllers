@@ -46,6 +46,7 @@ class RplidarLaserHandler:
         self.tf_id = tf_frame_id    # frame id of laser scan mesurements 
         self.pub_topic = publisher_name #ros topic name
         self.has_init = False       # has initialized (parsed 1st scan)
+        self.verbose = False        # if true send more to rosinfo screen output
 
         # Subscriber for the laser data
         self.sub = rospy.Subscriber(raw_laser_topic, LaserScan, self.laser_handler_callback)
@@ -167,10 +168,11 @@ class RplidarLaserHandler:
             self.roi_valid_elem[i] =    range_to_check > self.range_min  and \
                                         range_to_check < self.range_max
 
-        rospy.loginfo('roi_valid_elem: {0} of {1} elem {2} min {3}\
-                        max {4} snsr_min {5} snsr_max'.format(sum(self.roi_valid_elem), \
-                        len(self.roi_valid_elem), self.range_min, self.range_max,\
-                        min(self.ranges), max(self.ranges)))
+        if self.verbose:
+            rospy.loginfo('roi_valid_elem: {0} of {1} elem {2} min {3}\
+                            max {4} snsr_min {5} snsr_max'.format(sum(self.roi_valid_elem), \
+                            len(self.roi_valid_elem), self.range_min, self.range_max,\
+                            min(self.ranges), max(self.ranges)))
 
 if __name__ == '__main__':
     rospy.init_node('LaserHandler')
