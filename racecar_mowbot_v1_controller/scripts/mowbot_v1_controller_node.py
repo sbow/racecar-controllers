@@ -7,13 +7,14 @@ from ackermann_msgs.msg import AckermannDriveStamped
 from mowbot_general_control.mowbot_v1_main import MowbotV1Main
 from mowbot_laser_handler.mowbot_laser_handler import RplidarLaserHandler
 from geometry_msgs.msg import PoseStamped
-
+from nav_msgs.msg import OccupancyGrid
 
 class MowbotControllerNode:
     mowbot_msg = AckermannDriveStamped()
     mb_gnrl = MowbotV1Main()
     rplidar_obj = []
     pose_obj = PoseStamped()
+    map_obj = OccupancyGrid()
 
 
     def __init__(self):
@@ -39,6 +40,9 @@ class MowbotControllerNode:
         # setup pose callback - Pose update from hector_slam - rostopic hz /slam_out_pose ~ 13.5 hz Jetson TX1
         rospy.Subscriber("slam_out_pose", PoseStamped, self.hector_pose_callback)
 
+        # setup map callback - Map update from hector_slam - ros hz map ~ 0.6 hz Jetson TX1
+        rospy.Subscriber("map", OccupancyGrid, self.map_callback)
+
         # read VESC parameters from config/default.yaml:
         # TODO: Doesnt work
         # self.force_scale_x = rospy.get_param("force_scale_x")
@@ -52,6 +56,8 @@ class MowbotControllerNode:
         # for messaging
         rospy.loginfo("stayin alive")
         rospy.loginfo(self.mb_gnrl.get_pose())
+        rospy.loginfo("Map Pose:")
+        rospy.loginfo(self.mb_gnrl.get_pose().info.origin)
 
     def vesc_timer_callback(self, msg):
         # 50 hz publisher
@@ -66,6 +72,11 @@ class MowbotControllerNode:
         # TODO: Fill out pose callback, populate self.pose_obj
         self.pose_obj = msg
         MowbotControllerNode.mb_gnrl.update_pose(self.pose_obj)
+
+    def map_callback(self, msg):
+        # hector_slam /map callback - averages 0.56 Hz
+        self.map_obj = msg
+        MowbotControllerNode.mb_gnrl.update_map(self.map_obj)
 
     def update_mb_vesc_cmd(self):
         MowbotControllerNode.mb_gnrl.get_command()

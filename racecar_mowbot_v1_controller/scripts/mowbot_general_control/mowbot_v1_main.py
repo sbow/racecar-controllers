@@ -19,6 +19,7 @@ class MowbotV1Main:
     cmd_jerk = 0.0
 
     pose_slam = []
+    map = []
 
 
     def __init__(self):
@@ -101,5 +102,15 @@ class MowbotV1Main:
         # w: 0.999998666205
         self.pose_slam = pose
         pass
+
+    def get_map(self):
+        # return map data
+        return self.map
+
+    def update_map(self, map):
+        # update map data
+        self.map = map
+        pass
+
 
 
