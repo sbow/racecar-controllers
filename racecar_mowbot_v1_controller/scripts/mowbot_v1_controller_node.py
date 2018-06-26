@@ -57,7 +57,7 @@ class MowbotControllerNode:
         rospy.loginfo("stayin alive")
         rospy.loginfo(self.mb_gnrl.get_pose())
         rospy.loginfo("Map Pose:")
-        rospy.loginfo(self.mb_gnrl.get_pose().info.origin)
+        rospy.loginfo(self.mb_gnrl.get_map().info.origin)
 
     def vesc_timer_callback(self, msg):
         # 50 hz publisher
