@@ -163,6 +163,7 @@ install(PROGRAMS
   scripts/mowbot_v1_controller_node.py
   scripts/mowbot_general_control/mowbot_v1_main.py
   scripts/mowbot_laser_handler/mowbot_laser_handler.py
+  scripts/mowbot_path_planning/mowbot_path_planner.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

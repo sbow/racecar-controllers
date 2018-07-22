@@ -27,6 +27,8 @@ class MowbotControllerNode:
 
         # setup RPLidar handler - mowbot_laser_handler RplidarLaserHandler obj
         # RplidarLaserHandler( RawScanTopic, ROI_Ang_min_rad, ROI_Ang_max_rad, TF_Publish_Frame, OutputScanTopic )
+        # TODO: this is actually not currently used for anything... just using SLAM. In the future might be usefull for
+        # TODO: near-time avoidance of obstacles.
         self.rplidar_obj = RplidarLaserHandler('scan', -360/360.0*3.14,
                                                360/360.0*3.14,
                                                'laser', 'mowbot/scan')
@@ -44,7 +46,7 @@ class MowbotControllerNode:
         rospy.Subscriber("map", OccupancyGrid, self.map_callback)
 
         # read VESC parameters from config/default.yaml:
-        # TODO: Doesnt work
+        # TODO: Doesnt work, need to learn how to use rospy.get_param
         # self.force_scale_x = rospy.get_param("force_scale_x")
 
     def ackermann_cmd_input_callback(self, msg):
