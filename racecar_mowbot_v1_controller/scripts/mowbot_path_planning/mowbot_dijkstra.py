@@ -50,6 +50,7 @@ class MowbotDijkstra():
     ANIMATION_PAUSE = 0.001
     DEBUG = False
     VISUAL = False
+    VISUAL_RESULT_ONLY = False
 
     def __init__(self):
 
@@ -221,6 +222,19 @@ class MowbotDijkstra():
                 plt.imshow(viz_map, origin='upper', interpolation='none', clim=colormapval)
                 plt.pause(self.ANIMATION_PAUSE)
 
+            if self.VISUAL_RESULT_ONLY == True:
+                viz_map=occupancy_map
+                for i in range(0, len(route)):
+                    viz_map[route[i][2]][route[i][1]] = 7
+                viz_map[goalY][goalX] = 7
+                fig = plt.figure(figsize=(12,12))
+                ax = fig.add_subplot(111)
+                ax.set_title('Occupancy Grid')
+                plt.xticks(visible=False)
+                plt.yticks(visible=False)
+                plt.imshow(viz_map, origin='upper', interpolation='none', clim=colormapval)
+                ax.set_aspect('equal')
+                plt.show()
 
 
             path = []
@@ -248,4 +262,19 @@ class MowbotDijkstra():
                 plt.text(2, 10, s="No path found...", fontsize=18, style='oblique', ha='center', va='top')
                 plt.imshow(viz_map, origin='upper', interpolation='none', clim=colormapval)
                 plt.pause(self.ANIMATION_PAUSE)
+
+            if self.VISUAL_RESULT_ONLY == True:
+                viz_map=occupancy_map
+                fig = plt.figure(figsize=(12,12))
+                ax = fig.add_subplot(111)
+                ax.set_title('Occupancy Grid')
+                plt.xticks(visible=False)
+                plt.yticks(visible=False)
+                plt.imshow(viz_map, origin='upper', interpolation='none', clim=colormapval)
+                ax.set_aspect('equal')
+                plt.show()
+
             return False
+
+
+
