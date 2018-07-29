@@ -54,7 +54,7 @@ class MowbotV1Main:
         # MowbotV1Main.cmd_steering_angle
         # MowbotV1Main.cmd_steering_angle_velocity
 
-        MowbotV1Main.cmd_steering_angle = 0.2
+        MowbotV1Main.cmd_steering_angle = 0.2688 # 0.2688 rad should be 2.44 m / 96 inch diam turn circle
         MowbotV1Main.cmd_steering_angle_velocity = 0.25
         pass
 
@@ -64,7 +64,7 @@ class MowbotV1Main:
         # MowbotV1Main.cmd_acceleration
         # MowbotV1Main.cmd_jerk
 
-        MowbotV1Main.cmd_speed = 0.25
+        MowbotV1Main.cmd_speed = 1
         MowbotV1Main.cmd_acceleration = 0.50
         MowbotV1Main.cmd_jerk = 2.00
         pass
