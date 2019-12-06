@@ -29,7 +29,7 @@ class MowbotControllerNode:
         # RplidarLaserHandler( RawScanTopic, ROI_Ang_min_rad, ROI_Ang_max_rad, TF_Publish_Frame, OutputScanTopic )
         # TODO: this is actually not currently used for anything... just using SLAM. In the future might be usefull for
         # TODO: near-time avoidance of obstacles.
-        self.rplidar_obj = RplidarLaserHandler('scan', -360/360.0*3.14,
+        self.rplidar_obj = RplidarLaserHandler('scan', -360/360.0*3.14, # class defined in mowbot_laser_handler.py
                                                360/360.0*3.14,
                                                'laser', 'mowbot/scan')
 
