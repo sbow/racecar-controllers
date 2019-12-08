@@ -64,7 +64,7 @@ class MowbotV1Main:
         # MowbotV1Main.cmd_acceleration
         # MowbotV1Main.cmd_jerk
 
-        MowbotV1Main.cmd_speed = 0.5 # 0.5
+        MowbotV1Main.cmd_speed = 0.55 # 0.5
         MowbotV1Main.cmd_acceleration = 0.50
         MowbotV1Main.cmd_jerk = 2.00
         pass

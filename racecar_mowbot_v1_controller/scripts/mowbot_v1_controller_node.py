@@ -111,8 +111,8 @@ class MowbotControllerNode:
             cntr_c = self.cntr_c_prev
         # now control column should be defined, time to lookup steering angle
         c_lookup = [0,      10,     20,     30,     40,     50,     60,     64,     70,     80,     90,     100,    110,    120,    128]
-        str_axis = [1,       1,     .8,     .7,    .45,     .25,   .10,      0,   -.10,   -.25,    -.45,     -.7,     -8,     -1,     -1]
-        k_str_filt = .5
+        str_axis = [1,       1,     .8,    .60,    .45,     .25,   .10,      0,   -.10,   -.25,    -.45,   -.60,     -8,     -1,     -1]
+        k_str_filt = .6
 
         self.str_cmnd_prev = self.str_cmnd # update previous cmnd
         str_cmnd_raw = lininterp.lookup(cntr_c, c_lookup, str_axis)  # linear interpolation of steering calibration table
